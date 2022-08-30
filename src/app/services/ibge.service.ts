@@ -22,6 +22,6 @@ export class IbgeService {
   }
 
   findCidade(id: number): Observable<Cidades[]> {
-    return this.http.get<Cidades[]>(`http://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`);
+    return this.http.get<Cidades[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`);
   }
 }
