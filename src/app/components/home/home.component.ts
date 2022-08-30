@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cidades } from 'src/app/models/cidades';
 import { Estados } from 'src/app/models/estados';
@@ -10,7 +10,7 @@ import { IbgeService } from 'src/app/services/ibge.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewChecked {
+export class HomeComponent implements OnInit {
 
   public formCadastro: FormGroup;
 
@@ -47,18 +47,22 @@ export class HomeComponent implements OnInit, AfterViewChecked {
 
   public initializeEstado(): void {
     this.service.findEstado().subscribe(estados => {
-      this.estados = estados;
+      estados.forEach((est) => {
+        this.estados.push(est)
+      })
     })
   }
 
-  public initializeCidade(id: number): void {
+  public initializeCidade(): void {
     this.service.findCidade(this.formCadastro.value.estado.id).subscribe(cidades => {
-      this.cidades = cidades;
+      cidades.forEach((cid) => {
+        this.cidades.push(cid)
+      })
     })
   }
 
-  ngAfterViewChecked(): void {
-    this.initializeCidade(this.formCadastro.value.estado.id);
+  public limparCampo(): void {
+    this.cidades = [];
   }
-
+  
 }
