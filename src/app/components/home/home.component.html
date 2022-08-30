@@ -1,67 +1,69 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;600&display=swap');
-</style>
 <mat-toolbar color="primary">
-    <span>Curros App</span>
-    <img src="/assets/currosapp.png">
+  <span>Curros App</span>
+  <img src="/assets/currosapp.png">
+  <h3>Busque a loja Curros mais próxima de você!</h3>
 </mat-toolbar>
-<h2>Busque a loja Curros mais próxima de você!</h2>
+
 <div class="container">
-    <h2> <span class="material-icons">
-            store
-        </span> Pontos de Venda Cadastrados:</h2>
-    <ul type="">
-        <div *ngIf="cadastros">
-            <p>Não há pontos cadastrados.</p>
-        </div>
-        <li *ngFor="let ponto of pontosCadastrados">{{ponto.nome}}, {{ponto.cidade.nome}} - {{ponto.estado.nome}},
-            Local:
-            {{ponto.pontoDeVenda}}. Horários: de {{ponto.start}}h às {{ponto.end}}h</li>
-    </ul>
-</div>
-<h2><span class="material-icons">add_shopping_cart</span> Cadastre um Ponto de Venda:</h2>
-<div class="container">
+
+  <h2>
+    <mat-icon>store</mat-icon>Pontos de Venda Cadastrados:
+  </h2>
+
+  <ul>
+    <div *ngIf="cadastros" class="noregister">
+      <p>Não há pontos cadastrados.</p>
+    </div>
+    <li *ngFor="let ponto of pontosCadastrados">{{ponto.nome}}, {{ponto.cidade.nome}} - {{ponto.estado.nome}},
+      Local:
+      {{ponto.pontoDeVenda}}. Horário: de {{ponto.start}}h às {{ponto.end}}h</li>
+  </ul>
+
+  <h2>
+    <mat-icon>add_shopping_cart</mat-icon>Cadastre um Ponto de Venda:
+  </h2>
+
+  <div class="cadastro">
     <form class="full-width" [formGroup]="formCadastro" (click)="create()">
-        <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Nome</mat-label>
-            <input type="text" matInput formControlName="nome">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input type="text" matInput formControlName="nome">
+      </mat-form-field>
+
+      <div class="estado-cidade">
+        <mat-form-field appearance="fill">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let estado of estados" (blur)="initializeCidade()" (click)="limparCampo()"
+              [value]="estado">{{estado.nome}}</mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <div class="estado-cidade">
-            <mat-form-field appearance="fill">
-                <mat-label>Estado</mat-label>
-                <mat-select formControlName="estado">
-                    <mat-option *ngFor="let estado of estados" (blur)="initializeCidade()" (click)="limparCampo()"
-                        [value]="estado">{{estado.nome}}</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Cidade</mat-label>
+          <mat-select formControlName="cidade">
+            <mat-option *ngFor="let cidade of cidades" [value]="cidade">{{cidade.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Cidade</mat-label>
-                <mat-select formControlName="cidade">
-                    <mat-option *ngFor="let cidade of cidades" [value]="cidade">{{cidade.nome}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Ponto de Venda</mat-label>
+        <input type="text" matInput formControlName="pontoDeVenda">
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Ponto de Venda</mat-label>
-            <input type="text" matInput formControlName="pontoDeVenda">
+      <div class="horario">
+        <mat-form-field appearance="fill">
+          <mat-label>Começa às:</mat-label>
+          <input type="time" matInput formControlName="start">
         </mat-form-field>
 
-        <div class="horario">
-            <mat-form-field appearance="fill">
-                <mat-label>Começa às:</mat-label>
-                <input type="time" matInput formControlName="start">
-            </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Termina às:</mat-label>
+          <input type="time" matInput formControlName="end">
+        </mat-form-field>
+      </div>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Terminas às:</mat-label>
-                <input type="time" matInput formControlName="end">
-            </mat-form-field>
-        </div>
-
-        <button mat-raised-button>Cadastrar</button>
-
-    </form>
+      <button mat-raised-button>Cadastrar</button>
+  </form>
 </div>
