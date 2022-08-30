@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cidades } from 'src/app/models/cidades';
 import { Estados } from 'src/app/models/estados';
 import { Pontos } from 'src/app/models/pontos';
+import { IbgeService } from 'src/app/services/ibge.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewChecked {
 
   public formCadastro: FormGroup;
 
-  public estados: Estados[] = [{
-    id:1,
-    nome: "São Paulo"}];
-  public cidades: Cidades[] = [{
-    id:1,
-    nome: "São Paulo"}];
+  public estados: Estados[] = [];
+  public cidades: Cidades[] = [];
 
   pontosCadastrados: Pontos[] = [];
 
-  constructor(public formBuilder: FormBuilder) {
+  private service: IbgeService;
+
+  constructor(public formBuilder: FormBuilder, service: IbgeService) {
+    this.service = service;
     this.formCadastro = formBuilder.group({
       nome: ["", [Validators.required]],
       estado: ["", [Validators.required]],
@@ -34,14 +34,31 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initializeEstado();
   }
 
   public create(): void {
-    if(this.formCadastro.valid){
+    if (this.formCadastro.valid) {
       console.log(this.formCadastro);
       this.pontosCadastrados.push(this.formCadastro.value)
       console.log(this.pontosCadastrados);
     }
+  }
+
+  public initializeEstado(): void {
+    this.service.findEstado().subscribe(estados => {
+      this.estados = estados;
+    })
+  }
+
+  public initializeCidade(id: number): void {
+    this.service.findCidade(this.formCadastro.value.estado.id).subscribe(cidades => {
+      this.cidades = cidades;
+    })
+  }
+
+  ngAfterViewChecked(): void {
+    this.initializeCidade(this.formCadastro.value.estado.id);
   }
 
 }
