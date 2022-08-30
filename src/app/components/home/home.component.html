@@ -1,14 +1,25 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;600&display=swap');
+</style>
 <mat-toolbar color="primary">
-    <span>Curros</span>
+    <span>Curros App</span>
+    <img src="/assets/currosapp.png">
 </mat-toolbar>
+<h2>Busque a loja Curros mais próxima de você!</h2>
 <div class="container">
-<h2>Pontos de Venda Cadastrados:</h2>
-<ul type="none">
-    <li *ngFor="let ponto of pontosCadastrados">{{ponto.nome}}, {{ponto.estado.nome}}, {{ponto.cidade.nome}}, {{ponto.pontoDeVenda}}, {{ponto.start}}, {{ponto.end}}</li>
-</ul>
-<hr>
+    <h2> <span class="material-icons">
+            store
+        </span> Pontos de Venda Cadastrados:</h2>
+    <ul type="">
+        <div *ngIf="cadastros">
+            <p>Não há pontos cadastrados.</p>
+        </div>
+        <li *ngFor="let ponto of pontosCadastrados">{{ponto.nome}}, {{ponto.cidade.nome}} - {{ponto.estado.nome}},
+            Local:
+            {{ponto.pontoDeVenda}}. Horários: de {{ponto.start}}h às {{ponto.end}}h</li>
+    </ul>
 </div>
-<h2>Cadastre um Ponto de Venda:</h2>
+<h2><span class="material-icons">add_shopping_cart</span> Cadastre um Ponto de Venda:</h2>
 <div class="container">
     <form class="full-width" [formGroup]="formCadastro" (click)="create()">
         <mat-form-field class="full-width" appearance="fill">
@@ -20,7 +31,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="estado">
-                    <mat-option *ngFor="let estado of estados" (blur)="initializeCidade()" (click)="limparCampo()" [value]="estado">{{estado.nome}}</mat-option>
+                    <mat-option *ngFor="let estado of estados" (blur)="initializeCidade()" (click)="limparCampo()"
+                        [value]="estado">{{estado.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -49,7 +61,7 @@
             </mat-form-field>
         </div>
 
-        <button mat-raised-button color="primary">Cadastrar</button>
+        <button mat-raised-button>Cadastrar</button>
 
     </form>
 </div>

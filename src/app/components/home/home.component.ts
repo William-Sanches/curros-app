@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
 
   pontosCadastrados: Pontos[] = [];
 
+  cadastros: boolean = true;
+
   private service: IbgeService;
 
   constructor(public formBuilder: FormBuilder, service: IbgeService) {
@@ -42,6 +44,7 @@ export class HomeComponent implements OnInit {
       console.log(this.formCadastro);
       this.pontosCadastrados.push(this.formCadastro.value)
       console.log(this.pontosCadastrados);
+      this.cadastros = false;
     }
   }
 

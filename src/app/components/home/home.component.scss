@@ -1,3 +1,41 @@
 h2 {
+    align-items: center;
+}
+
+.material-icons{
+    margin-top: 5px;
+}
+
+.mat-toolbar{
+    font-size: 80px;
+    font-family: 'DynaPuff', cursiva;
+    background-color: indigo;
+    height: 120px;
+
+    img{
+        width: 194px;
+    }
+}
+
+h2{
+    font-family: 'DynaPuff', cursiva;
     text-align: center;
+    color: indigo;
+}
+
+.container{
+    border-top: solid 2px;
+    border-bottom: solid 2px;
+    border-color: indigo;
+
+    h2{
+        font-family: 'DynaPuff', cursiva;
+    }
+}
+
+button{
+    margin-top: 8px;
+    margin-right: -30px;
+    background-color: indigo;
+    color: white;
 }
